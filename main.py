@@ -48,7 +48,7 @@ app = Flask(__name__)
 def hello():
     word = request.args.get('word')
     print("processing " + word)
-    return mdl.predict(sequence.pad_sequences(token.texts_to_sequences([word]), maxlen=70))
+    return str(mdl.predict(sequence.pad_sequences(token.texts_to_sequences([word]), maxlen=70))[0])
 
 
 if __name__ == '__main__':
