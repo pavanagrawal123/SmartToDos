@@ -12,15 +12,10 @@
           <v-btn @click="Prioritize">Prioritize Tasks</v-btn>
         </v-flex>
         <v-flex xs3>
-          <v-btn @click="addTodo">Add</v-btn>
+          <v-btn @click="Time">Predict Time Needed</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
-    <template>
-      <v-form v-model="valid" v-on:submit.prevent="addTodo">
-        <v-btn :disabled="!valid" @click="addTodo">Add</v-btn>
-      </v-form>
-    </template>
     <template>
       <h1>No Priority Tasks</h1>
       <v-data-table
@@ -32,6 +27,7 @@
       >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.text }}</td>
+          <td>{{ props.item.time }}</td>
           <td>
             <v-btn :disabled="!valid" @click="removeTodo(props.item.id)">Completed</v-btn>
           </td>
@@ -47,6 +43,7 @@
       >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.text }}</td>
+          <td>{{ props.item.time }}</td>
           <td>
             <v-btn :disabled="!valid" @click="removeTodo(props.item.id)">Completed</v-btn>
           </td>
@@ -62,6 +59,7 @@
       >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.text }}</td>
+          <td>{{ props.item.time }}</td>
           <td>
             <v-btn :disabled="!valid" @click="removeTodo(props.item.id)">Completed</v-btn>
           </td>
@@ -77,6 +75,7 @@
       >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.text }}</td>
+          <td>{{ props.item.time }}</td>
           <td>
             <v-btn :disabled="!valid" @click="removeTodo(props.item.id)">Completed</v-btn>
           </td>
@@ -99,12 +98,8 @@ export default {
     return {
       todo: '',
       headers: [],
-      todoList: [
-        { id: 0, text: 'Item 1', priority: null },
-        { id: 1, text: 'Item 2', priority: null },
-        { id: 2, text: 'Item 3', priority: null }
-      ],
-      count: 2
+      todoList: [],
+      count: -1
     }
   },
   methods: {
@@ -112,7 +107,8 @@ export default {
       this.todoList.push({
         id: ++this.count,
         text: this.todo,
-        priority: null
+        priority: null,
+        time: null
       })
     },
     removeTodo: function(id) {
@@ -126,13 +122,28 @@ export default {
     },
     Prioritize: function() {
       for (let i = 0; i < this.todoList.length; i++) {
-        axios
-          .get(
-            'http://ec2-54-172-93-154.compute-1.amazonaws.com:5000/time?task=Calculus%20Homework'
-          )
-          .then(response => {
-            alert(response)
-          })
+        if (this.todoList[i].priority == null) {
+          axios
+            .get(
+              'http://ec2-54-172-93-154.compute-1.amazonaws.com:5000/priority?task=' + this.todoList[i].text
+            )
+            .then(response => {
+              this.todoList[i].priority = response.data
+            })
+        }
+      }
+    },
+    Time: function() {
+      for (let i = 0; i < this.todoList.length; i++) {
+        if (this.todoList[i].time == null) {
+          axios
+            .get(
+              'http://ec2-54-172-93-154.compute-1.amazonaws.com:5000/time?task=' + this.todoList[i].text
+            )
+            .then(response => {
+              this.todoList[i].time = response.data
+            })
+        }
       }
     }
   }
