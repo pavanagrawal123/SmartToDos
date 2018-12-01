@@ -36,7 +36,7 @@ xtrain_count =  count_vect.transform(train_x)
 xvalid_count =  count_vect.transform(valid_x)
 
 mdl = ensemble.RandomForestRegressor().fit(train_seq_x, train_y)
-print(mdl.predict(count_vect.transform(["finishing homework"])))
+print(mdl.predict(sequence.pad_sequences(token.texts_to_sequences(["laundry"]), maxlen=70)))
 
 from flask import Flask
 from flask import request
