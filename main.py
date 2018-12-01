@@ -1,7 +1,6 @@
 from sklearn import model_selection, preprocessing, linear_model, naive_bayes, metrics, svm
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn import decomposition, ensemble
-
 import pandas, xgboost, numpy, string
 from keras.preprocessing import text, sequence
 from keras import layers, models, optimizers
@@ -36,16 +35,21 @@ count_vect.fit(data['Task'])
 xtrain_count =  count_vect.transform(train_x)
 xvalid_count =  count_vect.transform(valid_x)
 
-mdl = ensemble.RandomForestRegressor().fit(xtrain_count, train_y)
-print(mdl.predict(count_vect.transform(["finishing homework"])))
+mdl = ensemble.RandomForestRegressor().fit(train_seq_x, train_y)
+sprint(mdl.predict(count_vect.transform(["finishing homework"])))
 
 from flask import Flask
+from flask import request
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    word = request.args.get('word')
+    print("processing " + word)
+    return mdl.predict(sequence.pad_sequences(token.texts_to_sequences([word]), maxlen=70))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
