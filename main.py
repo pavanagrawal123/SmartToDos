@@ -37,7 +37,7 @@ xtrain_count =  count_vect.transform(train_x)
 xvalid_count =  count_vect.transform(valid_x)
 
 mdl = ensemble.RandomForestRegressor().fit(xtrain_count, train_y)
-mdl.predict(count_vect.transform(["finishing homework"]))
+print(mdl.predict(count_vect.transform(["finishing homework"])))
 
 from flask import Flask
 app = Flask(__name__)
