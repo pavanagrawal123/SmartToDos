@@ -54,13 +54,13 @@ app = Flask(__name__)
 
 
 @app.route('/time')
-def hello():
+def time():
     word = request.args.get('task')
     print("processing " + word)
     return str(mdl.predict(sequence.pad_sequences(token.texts_to_sequences([word]), maxlen=70))[0])
 
 @app.route('/priority')
-def hello():
+def priority():
     word = request.args.get('task')
     print("processing " + word)
     return str(mdlT.predict(count_vect.transform([word]))[0])
