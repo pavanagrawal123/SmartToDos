@@ -49,9 +49,10 @@ print(mdl.predict(sequence.pad_sequences(token.texts_to_sequences(["laundry"]), 
 print(mdlT.predict(count_vect.transform(["laundry"])))
 from flask import Flask
 from flask import request
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/time')
 def time():
