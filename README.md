@@ -1,4 +1,4 @@
-# SmartTodos - Organize your life with Machine Learning!
+# SmartToDos - Organize your life with Machine Learning!
 
 Ever had so many things to do that you didn't even know where to start? That's how I feel almost every day...
 
