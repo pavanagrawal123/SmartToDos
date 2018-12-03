@@ -6,6 +6,7 @@ So I created this app to help alleviate this problem with Machine Learning. Drop
 
 Don't know which task to do first in each category? Let Machine Learning tell you which fast will be the fastest to complete using the time prediction model. 
 
+![](demo.gif)
 
 # How it's built.
 The app was built in a 12 hour hackathon so it is very messy internally, but is uses Keras for the ML algo, Flask to run the API server for the machine learning, and VueJS + Vuetify + Axios for the frontend.
